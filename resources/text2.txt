@@ -1,0 +1,19 @@
+text
+/*
+comment
+/*
+sdfsdf
+/*
+sdfsdf
+*/
+asdfsd
+
+/*
+*/
+
+/* sdfsdf/* sdfsdf*/
+/* */
+
+sdfsdf
+
+/**/

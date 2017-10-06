@@ -26,8 +26,23 @@ public class FileCommentProcessorImpl implements FileCommentProcessor {
                 List<String> buffer = new ArrayList<>();
                 String line = null;
                 while((line = reader.readLine()) != null) {
-                    String newLine = removeCommentsFromLine(line);
-                    writer.write(newLine + "\n");
+                    if(buffer.isEmpty()) {
+                        String newLine = removeCommentsFromLine(line);
+                        if(newLine.contains(START_COMMENT_SYMBOL)) {
+                            buffer.add(newLine);
+                        } else {
+                            writer.write(newLine + "\n");
+                        }
+                    } else if(line.contains(END_COMMENT_SYMBOL) && !buffer.isEmpty()){
+                        buffer.add(line);
+                        writeLines(writer, buffer);
+                    }
+
+                }
+                if(!buffer.isEmpty()) {
+                    String lastLineValue = buffer.get(0);
+                    String lastLine = lastLineValue.substring(0, lastLineValue.indexOf(START_COMMENT_SYMBOL));
+                    writer.write(lastLine);
                 }
             } catch (IOException e) {
                 System.out.println("exception during processing file: [" + fileName + "]");
@@ -41,12 +56,16 @@ public class FileCommentProcessorImpl implements FileCommentProcessor {
 
     }
 
-    private void writeLines(BufferedWriter writer, List<String> buffer, boolean isCommentedRows) {
-        if(isCommentedRows) {
-            String firstCommentRow = buffer.get(0);
-            String lastCommentRow = buffer.get(0);
-            //writer.write();
-        }
+    private void writeLines(BufferedWriter writer, List<String> buffer) throws IOException {
+        String firstCommentRow = buffer.get(0);
+        String lastCommentRow = buffer.get(buffer.size() - 1);
+
+        String firstRow = firstCommentRow.substring(0, firstCommentRow.indexOf(START_COMMENT_SYMBOL));
+        int lastRowIndex = lastCommentRow.indexOf(END_COMMENT_SYMBOL);
+        String lastRow = lastCommentRow.substring(lastRowIndex + END_COMMENT_SYMBOL.length());
+        writer.write(firstRow + "\n");
+        writer.write(lastRow + "\n");
+        buffer.clear();
     }
 
     private String removeCommentsFromLine(String line) {

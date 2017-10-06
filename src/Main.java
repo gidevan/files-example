@@ -29,5 +29,7 @@ public class Main {
     private static void removeComments() {
         FileCommentProcessor processor = new FileCommentProcessorImpl();
         processor.processFile("resources/one-row-comment.txt");
+        processor.processFile("resources/multi-row-comment1.txt");
+        processor.processFile("resources/multi-row-comment2.txt");
     }
 }

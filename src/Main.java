@@ -1,3 +1,5 @@
+import org.test.file.FileCommentProcessor;
+import org.test.file.FileCommentProcessorImpl;
 import org.test.mime.MimeTypeExtractor;
 import org.test.mime.MimeTypeExtractorImpl;
 
@@ -7,7 +9,8 @@ public class Main {
             "node/image.png/dir", "", "ddd"};
 
     public static void main(String[] args) {
-        getMimeTypes();
+        //getMimeTypes();
+        removeComments();
     }
 
     private static void getMimeTypes() {
@@ -21,5 +24,10 @@ public class Main {
                 System.out.println("fileName: [" + fileName + "] mime type: [unknown]: exception message: " + e.getMessage());
             }
         }
+    }
+
+    private static void removeComments() {
+        FileCommentProcessor processor = new FileCommentProcessorImpl();
+        processor.processFile("resources/one-row-comment.txt");
     }
 }

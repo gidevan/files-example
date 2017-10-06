@@ -41,6 +41,5 @@ public class MimeTypeExtractorImpl implements MimeTypeExtractor {
 
         }
         throw new IllegalArgumentException("Wrong file name. File name couldn't be empty");
-
     }
 }
